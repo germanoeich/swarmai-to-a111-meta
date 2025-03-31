@@ -257,14 +257,6 @@ async function processImage(inputPath, outputPath) {
     const mainModel = models.find(m => m.param === "model");
     const modelHash = mainModel ? shortenHash(mainModel.hash) : "unknown";
 
-    const mainModelBlake3Hash = mainModel ? mainModel.hash : null;
-    let modelAutoV2Hash = 'unknown'; // Default CivitAI (AutoV2) hash
-    if (mainModelBlake3Hash) {
-      modelAutoV2Hash = await getCivitaiModelInfoByHash(mainModelBlake3Hash.replace('0x', '').substring(0, 12), `model: ${modelName}`);
-    } else {
-      log(`Could not find main model hash in metadata for ${path.basename(inputPath)}.`);
-    }
-
     // Handle LoRAs if present
     const loras = params.loras || [];
     const loraWeights = params.loraweights || [];
